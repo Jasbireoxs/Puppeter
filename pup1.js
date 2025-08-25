@@ -78,7 +78,7 @@ class EOXSAutomation {
             // Launch browser
             const chromePath = this.resolveChromePath();
             this.browser = await puppeteer.launch({
-                headless: false, // Visible for interactive steps
+                headless: process.env.NODE_ENV === 'production' ? 'new' : false, // Headless in production
                 executablePath: chromePath || undefined,
                 defaultViewport: null, // Use full window size
                 args: [
@@ -89,7 +89,18 @@ class EOXSAutomation {
                     '--no-first-run',
                     '--no-zygote',
                     '--disable-gpu',
-                    '--start-maximized'
+                    '--start-maximized',
+                    '--disable-web-security',
+                    '--disable-features=VizDisplayCompositor',
+                    '--disable-extensions',
+                    '--disable-plugins',
+                    '--disable-images',
+                    '--disable-javascript-harmony-shipping',
+                    '--disable-background-timer-throttling',
+                    '--disable-backgrounding-occluded-windows',
+                    '--disable-renderer-backgrounding',
+                    '--disable-field-trial-config',
+                    '--disable-ipc-flooding-protection'
                 ]
             });
 

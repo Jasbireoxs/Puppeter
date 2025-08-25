@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: eoxs-automation
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    healthCheckPath: /health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - "**/*"
+        - "!node_modules/**"
+        - "!*.log"
+        - "!screenshots/**"
+        - "!README.md"
